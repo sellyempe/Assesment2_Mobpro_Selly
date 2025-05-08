@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">WaterCheck</string>
+    <string name="list_kosong">Belum ada catatan kebutuhan air.</string>
+    <string name="tambah_catatan">Tambah Catatan</string>
+    <string name="ubah_catatan">Ubah Catatan</string>
+    <string name="hapus_catatan">Hapus Catatan</string>
+    <string name="grid">Tampilan Grid</string>
+    <string name="list">Tampilan List</string>
+    <string name="label_nama">Nama</string>
+    <string name="tambah_water">Tambah Water</string>
+    <string name="tambah_data_air">Tambah Data Air</string>
+    <string name="edit_data_air">Edit Data Air</string>
+    <string name="kembali">Kembali</string>
+    <string name="simpan">Simpan</string>
+    <string name="batal">Batal</string>
+    <string name="pesan_hapus">Apakah Anda yakin ingin menghapus catatan ini?</string>
+    <string name="tombol_hapus">Hapus</string>
+    <string name="tombol_batal">Batal</string>
+    <string name="validasi_nama">Nama tidak boleh kosong</string>
+    <string name="validasi_jumlah_air">Jumlah air harus diisi dan berupa angka</string>
 </resources>
