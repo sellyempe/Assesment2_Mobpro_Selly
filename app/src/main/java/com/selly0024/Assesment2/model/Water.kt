@@ -5,8 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "water")
 data class Water(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val jumlah: Int,
     val waktu: String,
-    val wadah: String
+    val wadah: String,
+    val isDeleted: Boolean = false,
+    val sumberAir: String = ""
 )
