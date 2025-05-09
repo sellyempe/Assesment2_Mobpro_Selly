@@ -29,7 +29,6 @@ import androidx.navigation.compose.rememberNavController
 import com.selly0024.Assesment2.R
 import com.selly0024.Assesment2.database.WaterDb
 import com.selly0024.Assesment2.model.Water
-import com.selly0024.Assesment2.navigation.Screen
 import com.selly0024.Assesment2.ui.theme.MyApplicationTheme
 import com.selly0024.Assesment2.util.SettingsDataStore
 import com.selly0024.Assesment2.util.ViewModelFactory
@@ -68,6 +67,15 @@ fun MainScreen(navController: NavHostController) {
                                 if (showList) R.string.grid
                                 else R.string.list
                             ),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    IconButton(onClick = {
+                        navController.navigate(Screen.RecycleBin.route)
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_recycle_bin), // Ganti dengan ikon yang kamu punya
+                            contentDescription = "Recycle Bin",
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
