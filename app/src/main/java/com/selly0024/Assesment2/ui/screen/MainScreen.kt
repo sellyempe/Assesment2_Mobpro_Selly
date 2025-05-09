@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -70,14 +71,8 @@ fun MainScreen(navController: NavHostController) {
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
-                    IconButton(onClick = {
-                        navController.navigate(Screen.RecycleBin.route)
-                    }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_recycle_bin), // Ganti dengan ikon yang kamu punya
-                            contentDescription = "Recycle Bin",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
+                    IconButton(onClick = { navController.navigate(Screen.TrashScreen.route) }) {
+                        Icon(Icons.Default.Delete, contentDescription = "Recycle Bin")
                     }
                 }
             )
@@ -110,15 +105,15 @@ fun ListItem(water: Water, onClick: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = "${water.jumlah} ml",  // Menggunakan jumlah dari model
+            text = "${water.jumlah} ml",
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = water.waktu,  // Menggunakan waktu dari model
+            text = water.waktu,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        Text(text = water.wadah)  // Menggunakan wadah dari model
+        Text(text = water.wadah)
     }
 }
 
@@ -136,15 +131,15 @@ fun GridItem(water: Water, onClick: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = "${water.jumlah} ml",  // Menggunakan jumlah dari model
+                text = "${water.jumlah} ml",
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = water.waktu,  // Menggunakan waktu dari model
+                text = water.waktu,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            Text(text = water.wadah)  // Menggunakan wadah dari model
+            Text(text = water.wadah)
         }
     }
 }
@@ -152,9 +147,9 @@ fun GridItem(water: Water, onClick: () -> Unit) {
 @Composable
 fun ScreenContent(showList: Boolean, modifier: Modifier = Modifier, navController: NavHostController) {
     val context = LocalContext.current
-    val db = WaterDb.getInstance(context)
-    val factory = ViewModelFactory(db.dao)
+    val factory = ViewModelFactory(context)
     val viewModel: MainViewModel = viewModel(factory = factory)
+
     val data by viewModel.data.collectAsState()
 
     if (data.isEmpty()) {
@@ -173,9 +168,9 @@ fun ScreenContent(showList: Boolean, modifier: Modifier = Modifier, navControlle
             ) {
                 items(data) { water ->
                     ListItem(water = water) {
-                        navController.navigate(Screen.FormUbah.createRoute(water.id))  // Menggunakan createRoute untuk navigasi
+                        navController.navigate(Screen.FormUbah.createRoute(water.id))
                     }
-                    Divider()
+                    HorizontalDivider()
                 }
             }
         } else {
@@ -188,7 +183,7 @@ fun ScreenContent(showList: Boolean, modifier: Modifier = Modifier, navControlle
             ) {
                 items(data) { water ->
                     GridItem(water = water) {
-                        navController.navigate(Screen.FormUbah.createRoute(water.id))  // Menggunakan createRoute untuk navigasi
+                        navController.navigate(Screen.FormUbah.createRoute(water.id))
                     }
                 }
             }
