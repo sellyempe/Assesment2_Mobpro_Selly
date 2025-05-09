@@ -122,7 +122,7 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
         DisplayAlertDialog(
             onDismissRequest = { showDialog = false }) {
             showDialog = false
-            viewModel.delete(id)
+            viewModel.moveToRecycleBin(id)
             navController.popBackStack()
         }
     }
@@ -139,7 +139,6 @@ fun DeleteAction(onClick: () -> Unit) {
         }
 }
 
-
 @Composable
 fun FormWater(
     jumlah: String, onJumlahChange: (String) -> Unit,
@@ -147,10 +146,14 @@ fun FormWater(
     wadah: String, onWadahChange: (String) -> Unit,
     modifier: Modifier
 ) {
+    val waktuList = listOf("Pagi", "Siang", "Sore", "Malam")
     val wadahList = listOf("Botol", "Gelas", "Tumbler", "Lainnya")
+    var dropdownExpanded by remember { mutableStateOf(false) }
 
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         OutlinedTextField(
@@ -165,48 +168,52 @@ fun FormWater(
             modifier = Modifier.fillMaxWidth()
         )
 
-        OutlinedTextField(
-            value = waktu,
-            onValueChange = onWaktuChange,
-            label = { Text("Waktu") },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Sentences,
-                imeAction = ImeAction.Next
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
+        Text("Pilih Waktu Minum:", style = MaterialTheme.typography.bodyMedium)
+        Column {
+            waktuList.forEach { item ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onWaktuChange(item) }
+                        .padding(vertical = 4.dp)
+                ) {
+                    RadioButton(
+                        selected = waktu == item,
+                        onClick = { onWaktuChange(item) }
+                    )
+                    Text(text = item, modifier = Modifier.padding(start = 8.dp))
+                }
+            }
+        }
 
         Text("Pilih Jenis Wadah:", style = MaterialTheme.typography.bodyMedium)
 
-        OutlinedCard(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(8.dp),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
-        ) {
-            Column(modifier = Modifier.padding(8.dp)) {
-                wadahList.forEach { wadahItem ->
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onWadahChange(wadahItem) }
-                            .padding(vertical = 8.dp)
-                    ) {
-                        RadioButton(
-                            selected = (wadah == wadahItem),
-                            onClick = { onWadahChange(wadahItem) }
-                        )
-                        Text(
-                            text = wadahItem,
-                            modifier = Modifier.padding(start = 8.dp)
-                        )
-                    }
+        Box {
+            OutlinedButton(
+                onClick = { dropdownExpanded = true },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(if (wadah.isEmpty()) "Pilih Wadah" else wadah)
+            }
+            DropdownMenu(
+                expanded = dropdownExpanded,
+                onDismissRequest = { dropdownExpanded = false }
+            ) {
+                wadahList.forEach { item ->
+                    DropdownMenuItem(
+                        text = { Text(item) },
+                        onClick = {
+                            onWadahChange(item)
+                            dropdownExpanded = false
+                        }
+                    )
                 }
             }
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
