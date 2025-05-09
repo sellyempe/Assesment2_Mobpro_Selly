@@ -1,5 +1,6 @@
 package com.selly0024.Assesment2.navigation
 
+import Screen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -7,8 +8,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.selly0024.Assesment2.ui.screen.MainScreen
 import com.selly0024.Assesment2.ui.screen.DetailScreen
+import com.selly0024.Assesment2.ui.screen.MainScreen
+import com.selly0024.Assesment2.ui.screen.TrashScreen
 
 const val KEY_WATER_ID = "waterId"
 
@@ -32,6 +34,9 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
         ) { navBackStackEntry ->
             val id = navBackStackEntry.arguments?.getLong(KEY_WATER_ID)
             DetailScreen(navController, id)
+        }
+        composable(route = Screen.TrashScreen.route) {
+            TrashScreen(navController)
         }
     }
 }

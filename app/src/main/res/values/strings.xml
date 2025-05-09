@@ -11,6 +11,8 @@
     <string name="tambah_data_air">Tambah Data Air</string>
     <string name="edit_data_air">Edit Data Air</string>
     <string name="kembali">Kembali</string>
+    <string name="lainnya">Opsi lainnya</string>
+    <string name="hapus">Hapus</string>
     <string name="simpan">Simpan</string>
     <string name="batal">Batal</string>
     <string name="pesan_hapus">Apakah Anda yakin ingin menghapus catatan ini?</string>
@@ -18,4 +20,7 @@
     <string name="tombol_batal">Batal</string>
     <string name="validasi_nama">Nama tidak boleh kosong</string>
     <string name="validasi_jumlah_air">Jumlah air harus diisi dan berupa angka</string>
+    <string name="sampah">Sampah</string>
+    <string name="pulihkan">Pulihkan</string>
+    <string name="hapus_perm">Hapus permanen</string>
 </resources>

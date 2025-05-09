@@ -2,25 +2,20 @@ package com.selly0024.Assesment2.ui.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,15 +27,12 @@ import com.selly0024.Assesment2.database.WaterDb
 import com.selly0024.Assesment2.ui.theme.MyApplicationTheme
 import com.selly0024.Assesment2.util.ViewModelFactory
 
-
-const val KEY_ID_WATER = "idWater"
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(navController: NavHostController, id: Long? = null) {
     val context = LocalContext.current
     val db = WaterDb.getInstance(context)
-    val factory = ViewModelFactory(db.dao)
+    val factory = ViewModelFactory(context)
     val viewModel: DetailViewModel = viewModel(factory = factory)
 
     var jumlah by remember { mutableStateOf("") }
@@ -122,21 +114,37 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
         DisplayAlertDialog(
             onDismissRequest = { showDialog = false }) {
             showDialog = false
-            viewModel.moveToRecycleBin(id)
+            viewModel.softdelete(id)
             navController.popBackStack()
         }
     }
 }
 
 @Composable
-fun DeleteAction(onClick: () -> Unit) {
-    IconButton(onClick = onClick) {
+fun DeleteAction(delete: () -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+
+    IconButton(onClick ={expanded = true} ) {
         Icon(
-            imageVector = Icons.Filled.Delete,
-            contentDescription = "Hapus",
-            tint = MaterialTheme.colorScheme.error
+            imageVector = Icons.Filled.MoreVert,
+            contentDescription = stringResource(R.string.lainnya),
+            tint = MaterialTheme.colorScheme.primary
         )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            DropdownMenuItem(
+                text = {
+                    Text(text = stringResource(id = R.string.hapus))
+                },
+                onClick = {
+                    expanded = false
+                    delete()
+                }
+            )
         }
+    }
 }
 
 @Composable

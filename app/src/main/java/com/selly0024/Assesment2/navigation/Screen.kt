@@ -1,9 +1,10 @@
-package com.selly0024.Assesment2.navigation
+const val KEY_WATER_ID = "waterId"
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
-    object FormBaru : Screen("form_baru")
-    object FormUbah : Screen("form_ubah/{$KEY_WATER_ID}") {
-        fun createRoute(id: Long) = "form_ubah/$id"
+    object FormBaru : Screen("formBaru")
+    object FormUbah : Screen("formUbah/{$KEY_WATER_ID}") {
+        fun createRoute(id: Long) = "formUbah/$id"
     }
+    object TrashScreen : Screen("recycleBin")
 }
